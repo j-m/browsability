@@ -1,0 +1,3 @@
+[submodule "test-web-project"]
+	path = test-web-project
+	url = git@github.com:jamesevickery/test-web-project.git
