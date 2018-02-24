@@ -1,0 +1,9 @@
+{
+  "name": "suitabrowser",
+  "version": "0.0.0",
+  "description": "suitabrowser",
+  "main": "app.js",
+  "author": {
+    "name": "jrmar"
+  }
+}
