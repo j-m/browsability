@@ -8,9 +8,17 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
-    "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
-    "morgan": "^1.9.0",
-    "serve-favicon": "^2.4.5"
+    "express-github-webhook": "^1.0.6",
+    "morgan": "^1.9.0"
+  },
+  "repository": "https://github.com/jon-marsh/browsability",
+  "license": "MIT",
+  "scripts": {
+    "debug": "node_modules/nodemon/bin/nodemon.js app.js",
+    "forward": "./ngrok http 8084"
+  },
+  "devDependencies": {
+    "nodemon": "^1.15.1"
   }
 }
