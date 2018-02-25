@@ -1,0 +1,160 @@
+body{
+    background:#eee;
+    margin:0;
+    height:100vh;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#assessment{
+    display:inline-block;
+    margin: 4vh auto 8vh auto; 
+}
+#overall{
+    color:#444;
+    font-weight: 1000;
+    margin:0;
+}
+#overall:before{
+    content: "Against your criteria you...";
+    font-size:4vw;
+    white-space: nowrap;
+    display:block;
+}
+#overall:after{
+    font-size:20vw;
+    line-height:20vw;
+    max-width:100%;
+    content:"PASSED";
+    color:green;
+    text-shadow:0 .1rem darkgreen,
+                0 .2rem darkgreen,
+                0 .3rem darkgreen,
+                0 .4rem darkgreen,
+                0 .5rem darkgreen,
+                0 .6rem darkgreen;
+}
+#overall[invalid]:after{
+    content: "FAILED";
+    color:red;
+    text-shadow:0 .1rem darkred,
+                0 .2rem darkred,
+                0 .3rem darkred,
+                0 .4rem darkred,
+                0 .5rem darkred,
+                0 .6rem darkred;
+}
+@media (min-aspect-ratio: 2/1) {
+    #overall:before{
+        font-size:8vh;
+    }
+    #overall:after{
+        font-size:40vh;
+        line-height:40vh;
+    }
+  }
+#container{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15vh;
+}
+#container span{
+    display: inline-block;
+}
+#container span img{
+    max-width: 16vw;
+    max-height:20vh;
+    position: relative;
+    left:0;
+    bottom:0;
+    transition: bottom .2s;
+}
+#container span:hover img{
+    bottom:.5rem;
+}
+#container span::before{
+    content:" ";
+    display:block;
+    background-image:url('imgs/check.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width:50%;
+    padding-top:50%;
+    margin:auto;
+}
+#container span[invalid]::before{
+    background-image:url('imgs/cross.svg');
+}
+#chevron {
+    display:block;
+    position: relative;
+    left:0;
+    bottom:-5vh;
+    text-align: center;
+    margin:auto;
+    height: .5vh;
+    width: 10%;
+  }
+  #chevron:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 51%;
+    background: #ddd;
+    transform: skew(0deg, 12deg);
+  }
+  #chevron:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 50%;
+    background: #ddd;
+    transform: skew(0deg, -12deg);
+  }
+#factors h2{
+    margin:auto;
+}
+#factors table{
+    position:relative;
+    margin:auto;
+    background:white;
+    border-collapse: collapse;
+    border:1px solid #ddd;
+    margin: 2rem auto;
+    width:100%;
+    max-width:50rem;
+}
+#factors th{
+    background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 30%,#f6f6f6 30%,#e5e5e5 100%);
+    padding:1rem 2rem;
+    height:2rem;
+}
+#factors tr:nth-child(2n){
+    background:#fdfdfd;
+}
+#factors tr:hover{
+    background:yellow;
+    cursor:pointer;
+}
+#factors td{
+    position:relative;
+    padding: .5rem .8rem;
+    border:1px solid #ddd; 
+}
+#factors td:not(:first-child){
+    color: #AAA;
+}
+#factors td:not(:first-child)::before{
+    content: " ";
+    display: block;
+    width:2rem;
+    height:2rem;
+    margin:auto;
+    background-image:url('imgs/check.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
