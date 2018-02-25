@@ -10,12 +10,18 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "express-github-webhook": "^1.0.6",
-    "morgan": "^1.9.0"
+    "glob": "^7.1.2",
+    "http-post": "^0.1.1",
+    "morgan": "^1.9.0",
+    "node-env-file": "^0.1.8",
+    "node-rest-client": "^3.1.0",
+    "nodegit": "^0.20.3",
+    "request": "^2.83.0"
   },
   "repository": "https://github.com/jon-marsh/browsability",
   "license": "MIT",
   "scripts": {
-    "debug": "node_modules/nodemon/bin/nodemon.js app.js",
+    "debug": "rm -rf clones/tmp-*/ && node app.js",
     "forward": "./ngrok http 8084"
   },
   "devDependencies": {
