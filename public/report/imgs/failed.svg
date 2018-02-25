@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 30">
+    <g text-anchor="middle"  font-family="Arial Black" font-size="20" fill="#A90000" >
+        <text x="50" y="20.25">FAILED</text>
+        <text x="50" y="20.50">FAILED</text>
+        <text x="50" y="20.75">FAILED</text>
+        <text x="50" y="21.00">FAILED</text>
+        <text x="50" y="21.25">FAILED</text>
+        <text x="50" y="20.00" fill="#ED0000">FAILED</text>
+    </g>
+</svg>
