@@ -8,8 +8,13 @@ var path = require('path');
 var Git = require("nodegit");
 var env = require('node-env-file');
 var request = require('request');
-var glob = require("glob")
+var glob = require("glob");
 env(__dirname + '/.env');
+
+var domain = "https://41c3c8b4.ngrok.io";
+
+// Other code
+var compat = require("./compat.js");
 
 var dataSave = {
     ref: 'refs/heads/master',
@@ -194,8 +199,17 @@ var webhookHandler = GithubWebHook({
 });
 
 app.use(express.static(path.join(__dirname, '/public')));
+
 app.get('/', function (req, res) {
     res.render('index.html');
+});
+
+app.get('/report', function (req, res) {
+    res.render('report.html');
+});
+
+app.get('/json/:id', function (req, res) {
+    res.sendFile(path.join(__dirname, '/json/' + encodeURIComponent(req.params.id)));
 });
 
 app.use(bodyParser.json());
@@ -217,23 +231,35 @@ function updateStatus(repoName, commit, details) {
             '?access_token=' + process.env.ACCESS_TOKEN,
         json: details
     }, function (error, response, body) {
-        console.log(body);
+        try {
+            console.log(body['state'] + ": " + body['url']);
+        } catch (err) { }
     });
 }
 
 
 function generateFileList(details, config) {
-    config['filesRes'] = [];
+    var resolvedFiles = [];
 
     console.log(details.path);
     for (var i = 0; i < config['files'].length; i++) {
         var newFiles = glob.sync(config['files'][i], {
             'cwd': details.path
         });
-        config['filesRes'] += newFiles;
+
+        for (var j = 0; j < newFiles.length; j++) {
+            resolvedFiles.push(newFiles[j]);
+        }
     }
+    for (var i = 0; i < resolvedFiles.length; i++) {
+        resolvedFiles[i] = path.join(__dirname, '/' + details['dirName'] + '/' + resolvedFiles[i]);
+    }
+    config['filesRes'] = resolvedFiles;
 
     console.log("resultant config:\n" + JSON.stringify(config, null, 2));
+
+    compat.checkFiles(details, config)
+
     return config;
 }
 
@@ -244,10 +270,11 @@ function runCompatCheck(data) {
         'headCommit': data['head_commit']['id'],
         'repoName': data['repository']['full_name'],
     };
-    details['dirName'] = details['repoName'].replace('/', '-') + "-" + details['headCommit'];
-    details['path'] = process.cwd() + '/clones/tmp-' + details['dirName'];
+    details['report'] = domain + "/report?repo=" + encodeURIComponent(details.repoName) + "&id=" + encodeURIComponent(details.headCommit);
+    details['dirName'] = 'clones/tmp-' + details['repoName'].replace('/', '-') + "-" + details['headCommit'];
+    details['path'] = process.cwd() + '/' + details['dirName'];
 
-    Git.Clone(details['repoUrl'], "./clones/tmp-" + details['dirName'])
+    Git.Clone(details['repoUrl'], "./" + details['dirName'])
         .then(function (repo) {
             return repo.getCommit(details['headCommit']);
         })
@@ -270,7 +297,7 @@ function runCompatCheck(data) {
 
             updateStatus(details['repoName'], details['headCommit'], {
                 "state": "success",
-                "target_url": "https://example.com",
+                "target_url": details.report,
                 "description": "Browser compatibility checks passed",
             });
         })
@@ -278,25 +305,17 @@ function runCompatCheck(data) {
             console.log('error: ' + String(err));
             updateStatus(details['repoName'], details['headCommit'], {
                 "state": "error",
-                "target_url": "https://example.com",
-                "description": "An error occured while trying to read git repository",
+                "target_url": domain,
+                "description": "Oops! browsability ran into an error",
             });
         });
 }
 
 runCompatCheck(dataSave); // Test
 
-webhookHandler.on('*', function (event, repo, data) {
-    console.log("all event trigger");
-});
-
 webhookHandler.on('push', function (repo, data) {
     console.log("checking: " + repo);
     runCompatCheck(data);
-});
-
-webhookHandler.on('error', function (err, req, res) {
-    console.log("error");
 });
 
 app.set('port', process.env.PORT || listenOnPort);
