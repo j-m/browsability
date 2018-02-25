@@ -59,6 +59,20 @@ exports.checkFiles = function (details, config) {
             "safari": "1",
             "safari_ios": "1"
         },
+        'browser-tests': {
+            "webview_android": true,
+            "chrome": true,
+            "chrome_android": true,
+            "edge": true,
+            "edge_mobile": true,
+            "firefox": true,
+            "firefox_android": true,
+            "ie": true,
+            "opera": true,
+            "opera_android": true,
+            "safari": true,
+            "safari_ios": true
+        },
         'properties': {},
     };
 
@@ -73,10 +87,26 @@ exports.checkFiles = function (details, config) {
             if (currentMinBrowser < propSupportVersion) {
                 result['minimum-support'][browser] = propSupportVersion;
             }
-        })
+        });
+    });
+
+    Object.keys(config['browsers']).forEach(function (b) {
+        if (config['browsers'][b] < result['minimum-support'][b]) {
+            result['browser-tests'][b] = false;
+        }
+    });
+
+    var tests = Object.values(result['browser-tests']);
+    var testsValues = [];
+    tests.forEach(function (passed) {
+        testsValues.push(passed);
+    })
+    result.succ = testsValues.every(function (v) {
+        return v;
     });
 
     console.log(JSON.stringify(result, null, 2));
+    console.log(details.headCommit);
 
     var filename = encodeURIComponent(details.repoName) + "-" + encodeURIComponent(details.headCommit);
     jsonfile.writeFileSync(__dirname + "/json/" + filename + ".json", result);

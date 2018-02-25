@@ -200,6 +200,12 @@ var webhookHandler = GithubWebHook({
 
 app.use(express.static(path.join(__dirname, '/public')));
 
+app.all('*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
 app.get('/', function (req, res) {
     res.render('index.html');
 });
@@ -240,6 +246,7 @@ function updateStatus(repoName, commit, details) {
 
 function generateFileList(details, config) {
     var resolvedFiles = [];
+    config['files'] = ["*.html"];
 
     console.log(details.path);
     for (var i = 0; i < config['files'].length; i++) {
@@ -311,7 +318,7 @@ function runCompatCheck(data) {
         });
 }
 
-runCompatCheck(dataSave); // Test
+// runCompatCheck(dataSave); // Test
 
 webhookHandler.on('push', function (repo, data) {
     console.log("checking: " + repo);
