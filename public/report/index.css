@@ -35,7 +35,7 @@ body{
 }
 #overall[invalid]:after{
     content: "FAILED";
-    color:red;
+    color:#e70000;
     text-shadow:0 .1rem darkred,
                 0 .2rem darkred,
                 0 .3rem darkred,
@@ -43,7 +43,7 @@ body{
                 0 .5rem darkred,
                 0 .6rem darkred;
 }
-@media (min-aspect-ratio: 2/1) {
+@media (min-aspect-ratio: 2/1) {    
     #overall:before{
         font-size:8vh;
     }
@@ -156,5 +156,10 @@ body{
     background-image:url('imgs/check.svg');
     background-repeat: no-repeat;
     background-size: cover;
-    
+}
+#factors td[invalid]::before{
+    background-image:url('imgs/cross.svg');
+}
+#list{
+    margin-bottom:1rem;
 }
