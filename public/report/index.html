@@ -2,10 +2,11 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="index.css"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="assessment">
-        <h1 invalid id="overall"></h1>
+        <h1 id="overall"></h1>
     </div>
     <div id="container">
         <span id="chrome"><a href="#factors"><img src="imgs/chrome.png"/></a></span>
@@ -20,48 +21,25 @@
         <a name="factors"></a>
         <table>
             <thead>
-                <th>Attribute</th>
-                <th>Chrome</th>
-                <th>Firefox</th>
-                <th>Safari</th>
-                <th>Edge</th>
-                <th>IE</th>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Chrome</th>
+                    <th>Firefox</th>
+                    <th>Safari</th>
+                    <th>Edge</th>
+                    <th>IE</th>
+                </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Flexbox</td>
-                    <td>52</td>
-                    <td>12</td>
-                    <td>11</td>                  
-                    <td>12</td>                  
-                    <td invaid>2</td>                  
-                </tr>
-                <tr>
-                    <td>Grid</td>
-                    <td>60</td>
-                    <td invalid>10</td>
-                    <td>11</td>
-                    <td>4</td>                   
-                    <td invalid>N/A</td>                   
-                </tr>
-                <tr>
-                    <td>Display content</td>
-                    <td>23</td>
-                    <td>65</td>
-                    <td>12</td>
-                    <td>13</td>                   
-                    <td></td>                   
-                </tr>
-                <tr>
-                    <td>CSS Grid</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>                   
-                    <td></td>                   
-                </tr>
+            <tbody id="insert">
+
             </tbody>
         </table>
+        <p><small>If this list is empty then there is nothing wrong</small></p>
     </div>
+    <div id="list">
+        <h2>A list of all detected CSS properties</h2>
+        <p></p>
+    </div>
+    <script type="text/javascript" src="index.js"></script>
 </body>
 </html>
