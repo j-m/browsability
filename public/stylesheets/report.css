@@ -74,7 +74,7 @@ body{
 #container span::before{
     content:" ";
     display:block;
-    background-image:url('imgs/check.svg');
+    background-image:url('../images/check.svg');
     background-repeat: no-repeat;
     background-size: cover;
     width:50%;
@@ -82,7 +82,7 @@ body{
     margin:auto;
 }
 #container span[invalid]::before{
-    background-image:url('imgs/cross.svg');
+    background-image:url('../images/cross.svg');
 }
 #chevron {
     display:block;
@@ -153,12 +153,12 @@ body{
     width:2rem;
     height:2rem;
     margin:auto;
-    background-image:url('imgs/check.svg');
+    background-image:url('../images/check.svg');
     background-repeat: no-repeat;
     background-size: cover;
 }
 #factors td[invalid]::before{
-    background-image:url('imgs/cross.svg');
+    background-image:url('../images/cross.svg');
 }
 #list{
     margin-bottom:1rem;

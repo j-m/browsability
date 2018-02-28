@@ -11,7 +11,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d04cf84a-13cd-42a1-b60c-0873e437f162</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>server.js</StartupFile>
+    <StartupFile>app.js</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -28,12 +28,42 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="server.js" />
+    <Content Include=".env">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="LICENSE" />
     <Content Include="package.json" />
+    <Content Include="public\error.html" />
+    <Content Include="public\favicon.ico" />
+    <Content Include="public\images\check.svg" />
+    <Content Include="public\images\chrome.png" />
+    <Content Include="public\images\cross.svg" />
+    <Content Include="public\images\edge.png" />
+    <Content Include="public\images\firefox.png" />
+    <Content Include="public\images\ie.png" />
+    <Content Include="public\images\opera.png" />
+    <Content Include="public\images\safari.png" />
+    <Content Include="public\index.html" />
+    <Content Include="public\list.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\report.html" />
+    <Content Include="public\stylesheets\error.css" />
+    <Content Include="public\stylesheets\index.css" />
+    <Content Include="public\stylesheets\report.css" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\" />
+    <Folder Include="public\images\" />
+    <Folder Include="public\javascript\" />
+    <Folder Include="public\stylesheets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="app.js" />
+    <Compile Include="compat.js" />
+    <Compile Include="public\javascript\index.js" />
+    <Compile Include="public\javascript\report.js" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
