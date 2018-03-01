@@ -38,13 +38,13 @@ app.get('/list', function (req, res) {
             + '&code=' + query.code;
         request.get({ url: u, json: true }, function (error, response, body) {
             console.log("ERROR:",error);
-            console.log("RESPONSE:",response);
-            console.log("BODY", body);
-            res.redirect('/list.html?token=' + response.access_token);
+            //console.log("RESPONSE:",response);
+            //console.log("BODY", body);
+            res.redirect('/list.html?token=' + body.access_token);
         });   
     } else {
         console.log("ERROR: No code returned");
-        res.redirect('/list.html');
+        res.redirect('/');
     }
 });
 app.get('/assess', function (req, res) {

@@ -1,11 +1,25 @@
 ﻿<!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <title>Browsibilty</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
     <p>Successful redirect</p>
+    <div id="w">
+        <h1>Simple Github API Webapp</h1>
+        <p>Enter a single Github username below and click the button to display profile info via JSON.</p>
+
+        <input type="text" name="ghusername" id="ghusername" placeholder="Github username...">
+
+        <a href="#" id="ghsubmitbtn">Pull User Data</a>
+
+        <div id="ghapidata" class="clearfix"></div>
+    </div>
+    <script src="./javascript/list.js"></script>
 </body>
 </html>
