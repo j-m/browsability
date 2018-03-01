@@ -31,6 +31,7 @@
     <Content Include=".env">
       <SubType>Code</SubType>
     </Content>
+    <Content Include=".env.example" />
     <Content Include="LICENSE" />
     <Content Include="package.json" />
     <Content Include="public\error.html" />
