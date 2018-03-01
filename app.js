@@ -39,11 +39,12 @@ app.get('/list', function (req, res) {
         request.get({ url: u, json: true }, function (error, response, body) {
             console.log("ERROR:",error);
             console.log("RESPONSE:",response);
-            console.log("BODY",body);
-        });
-        res.render('list.html');
+            console.log("BODY", body);
+            res.redirect('/list.html?token=' + response.access_token);
+        });   
     } else {
         console.log("ERROR: No code returned");
+        res.redirect('/list.html');
     }
 });
 app.get('/assess', function (req, res) {
