@@ -1,3 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="100 100" width="9rem" height="1rem"  dominant-baseline="middle">
-	<text x="50%" y="50%" font-family="Courier New" font-weight="600" fill="#4D4D4D" text-anchor="middle">::brows<tspan fill="#0FD101">ability</tspan></text>
+<svg xmlns="http://www.w3.org/2000/svg" width="9rem" height="1rem">
+	<text x="50%" y="50%" font-family="Courier New" font-weight="600" fill="#4D4D4D" dominant-baseline="middle" text-anchor="middle">::brows<tspan fill="#0FD101">ability</tspan></text>
 </svg>
