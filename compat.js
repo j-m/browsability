@@ -1,11 +1,36 @@
-const bcd = require('mdn-browser-compat-data');
-var css = require('css');
-var fs = require('fs');
-var jsonfile = require('jsonfile');
+const bcd = require('mdn-browser-compat-data'),
+    css = require('css'),
+    fs = require('fs'),
+    jsonfile = require('jsonfile'),
+    exports = module.exports = {};
 
-var exports = module.exports = {};
+var files = [], config = {};
+function getContents(name, path, token) {
+    var uri = 'https://raw.githubusercontent.com/' + name + '/master/' + path + '?access_token=' + token;
+    $.get(uri, function (data) {
+        return { file: path, content: data };
+    });
+}
+exports.getFile = function (name, token) {
+    $.getJSON('https://api.github.com/repos/' + name + '/commits/master?access_token=' + token, function (latest) { //get latest commit on master
+        $.getJSON('https://api.github.com/repos/' + name + '/git/trees/' + latest.sha + '?recursive=1&access_token=' + token, function (data) { //get tree object with paths
+            $.each(data.tree, function (index) {
+                var file = data.tree[index];
+                if (file.type == "blob") {
+                    var fileType = file.path.substr(file.path.lastIndexOf("."));
+                    if (fileType == ".browsability")
+                        config = getContents(name, file.path, token); /*TODO*/
+                    else if (fileType == ".css")
+                        files.push(getContents(name, file.path, token));
+                    else if (fileType == ".html")
+                        files.push(getContents(name, file.path, token));
+                }
+            });
+        });
+    });
+}
 
-function getFileCssProperties(details, config, contents) {
+function getFileCssProperties(contents) {
     contents = contents.substring(contents.indexOf("<style>") + 7);
     contents = contents.substring(0, contents.indexOf("</style>"));
     if (contents.length < 1) return [];
@@ -29,20 +54,15 @@ function getFileCssProperties(details, config, contents) {
     return properties;
 }
 
-
-exports.checkFiles = function (details, config) {
-    var files = config['filesRes'];
-
+exports.checkFiles = function () {
     var allProperties = [];
-
     files.forEach(function (file) {
-        var contents = fs.readFileSync(file, 'utf8');
-        var curProperties = getFileCssProperties(details, config, contents);
+        var contents = files[file].content;
+        var curProperties = getFileCssProperties(contents);
         curProperties.forEach(function (props) {
             allProperties.push(props);
         });
     });
-
     result = {
         'succ': true,
         'minimum-support': {
