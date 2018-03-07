@@ -1,4 +1,4 @@
-[![Logo](design/logo-banner.svg)](http://www.jonmarsh.tech:8084)
+<a href="http://www.jonmarsh.tech:8084"><img src="design/logo-banner.svg" width="100%"></a>
 
 # What is it?
 
