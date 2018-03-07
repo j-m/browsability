@@ -11,8 +11,6 @@ var listenOnPort = 8084,
     path = require('path'),
     request = require('request'),
     url = require('url'),
-    git = require("nodegit"),
-    glob = require("glob"),
     compat = require("./compat.js");
 
 /*===Express app config===*/
@@ -38,8 +36,6 @@ app.get('/list', function (req, res) {
             + '&code=' + query.code;
         request.get({ url: u, json: true }, function (error, response, body) {
             console.log("ERROR:",error);
-            //console.log("RESPONSE:",response);
-            //console.log("BODY", body);
             res.redirect('/list.html?token=' + body.access_token);
         });   
     } else {
@@ -48,5 +44,5 @@ app.get('/list', function (req, res) {
     }
 });
 app.get('/assess', function (req, res) {
-    /*Insert old logic*/
+    compat.getFiles(url.parse(req.url, true).name, url.parse(req.url, true).access_token || "");
 });
