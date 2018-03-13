@@ -18,6 +18,7 @@ A lot. As we're trying to make this forwards compatible with MDN's data we can't
 - [ ] CSS
 - [ ] HTML
 - [ ] JavaScript
+- [ ] Detect fallbacks
 - [ ] GitHub status
 - [ ] Webhook auto-status
 - [ ] Commit/branch selection
