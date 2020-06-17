@@ -1,6 +1,6 @@
 {
   "name": "browsability",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "browsability",
   "main": "src/cli.js",
   "repository": "https://github.com/j-m/browsability",
