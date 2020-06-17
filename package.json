@@ -53,9 +53,12 @@
   },
   "repository": "j-m/browsability",
   "scripts": {
-    "posttest": "eslint . --ext .ts --config .eslintrc",
-    "prepack": "rimraf lib && tsc -b && oclif-dev readme",
+    "lint": "eslint -c config/.eslintrc.json --ignore-path config/.eslintignore . --ext .ts --no-inline-config ",
+    "clean": "rimraf lib",
+    "build": "tsc -p config/",
+    "prepack": "npm run clean && npm run build && oclif-dev readme",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "posttest": "npm run lint",
     "version": "oclif-dev readme && git add README.md"
   },
   "types": "lib/index.d.ts"
