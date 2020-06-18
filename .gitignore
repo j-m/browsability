@@ -16,3 +16,4 @@ build/
 /tmp
 /yarn.lock
 config/tsconfig.tsbuildinfo
+coverage/

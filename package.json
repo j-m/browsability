@@ -17,23 +17,15 @@
     "mdn-browser-compat-data": "^1.0.25"
   },
   "devDependencies": {
-    "@oclif/command": "^1.6.1",
-    "@oclif/config": "^1.15.1",
-    "@oclif/dev-cli": "^1.22.2",
-    "@oclif/plugin-help": "^3.1.0",
-    "@oclif/test": "^1.2.6",
     "@types/chai": "^4.2.11",
     "@types/hjson": "^2.4.1",
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^10.17.26",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^14.0.13",
     "chai": "^4.2.0",
-    "eslint": "^5.16.0",
-    "eslint-config-oclif": "^3.1.0",
-    "eslint-config-oclif-typescript": "^0.1.0",
+    "eslint": "^7.2.0",
     "mocha": "^8.0.1",
-    "nyc": "^14.1.1",
-    "rimraf": "^3.0.2",
-    "tslib": "^1.13.0",
+    "nyc": "^15.1.0",
+    "tslib": "^2.0.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
   },
@@ -46,23 +38,22 @@
   ],
   "homepage": "https://github.com/j-m/browsability",
   "keywords": [
-    "oclif"
+    "browser",
+    "compatibility",
+    "analyser",
+    "html",
+    "css",
+    "javascript"
   ],
   "license": "MIT",
   "main": "lib/index.js",
-  "oclif": {
-    "bin": "browsability"
-  },
   "repository": "j-m/browsability",
   "scripts": {
-    "lint": "eslint -c config/.eslintrc.json --ignore-path config/.eslintignore . --ext .ts --no-inline-config ",
-    "clean": "rimraf lib",
+    "lint": "eslint -c config/.eslintrc.json --ignore-path config/.eslintignore --ext .ts",
     "build": "tsc -p config/",
     "prepack": "npm run clean && npm run build && oclif-dev readme",
-    "dummy": "node bin/run --config=docs/.browsability",
-    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
-    "posttest": "npm run lint",
-    "version": "oclif-dev readme && git add README.md"
+    "selfassess": "npm unlink && npm link && browsability assess --config docs/.browsability && npm unlink",
+    "test": "nyc --extension .ts mocha --config ./config/.mocharc.yml --forbid-only \"test/**/*.test.ts\""
   },
   "types": "lib/index.d.ts"
 }
