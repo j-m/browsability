@@ -36,7 +36,7 @@
     "lint:syntax": "eslint --fix -c ./config/.eslintrc ./src ./test --ext .ts",
     "lint:format": "prettier --write  --config ./config/.prettierrc ./src/**/*.ts ./test/**/*.ts",
     "lint": "npm run lint:syntax && npm run lint:format",
-    "test:unit": "jest --config config/jest.config.js",
+    "test:unit": "jest --config=config/jest.config.js",
     "test:integration": "npm unlink && npm link && browsability --config ./docs/ && npm unlink",
     "test": "npm run test:unit && npm run test:integration"
   },
