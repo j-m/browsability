@@ -1,6 +1,9 @@
-import { parse } from './parse/command'
+import { parse } from './command'
 
-export function run() {
+export default function browsability(argv?: string[]): void {
   const [, , ...args] = process.argv
-  parse(args)
+  parse(argv ? argv : args).catch((error) => {
+    console.error(error)
+    process.exitCode = 1
+  })
 }
