@@ -7,35 +7,11 @@
     "email": "hello@jonmarsh.dev",
     "url": "https://www.jonmarsh.dev"
   },
-  "bin": {
-    "browsability": "./bin/run"
-  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": "j-m/browsability",
   "bugs": "https://github.com/j-m/browsability/issues",
-  "dependencies": {
-    "css": "^2.2.4",
-    "hjson": "^3.2.1",
-    "mdn-browser-compat-data": "^1.0.25"
-  },
-  "devDependencies": {
-    "@types/chai": "^4.2.11",
-    "@types/hjson": "^2.4.1",
-    "@types/mocha": "^7.0.2",
-    "@types/node": "^14.0.13",
-    "chai": "^4.2.0",
-    "eslint": "^7.2.0",
-    "mocha": "^8.0.1",
-    "nyc": "^15.1.0",
-    "tslib": "^2.0.0",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.5"
-  },
-  "engines": {
-    "node": ">=8.0.0"
-  },
-  "files": [
-    "/bin",
-    "/lib"
-  ],
   "homepage": "https://github.com/j-m/browsability",
   "keywords": [
     "browser",
@@ -45,15 +21,51 @@
     "css",
     "javascript"
   ],
-  "license": "MIT",
-  "main": "lib/index.js",
-  "repository": "j-m/browsability",
-  "scripts": {
-    "lint": "eslint -c config/.eslintrc.json --ignore-path config/.eslintignore --ext .ts",
-    "build": "tsc -p config/",
-    "prepack": "npm run clean && npm run build && oclif-dev readme",
-    "selfassess": "npm unlink && npm link && browsability assess --config docs/.browsability && npm unlink",
-    "test": "nyc --extension .ts mocha --config ./config/.mocharc.yml --forbid-only \"test/**/*.test.ts\""
+  "engines": {
+    "node": ">=8.0.0"
   },
-  "types": "lib/index.d.ts"
+  "bin": {
+    "browsability": "./bin/run"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "scripts": {
+    "build": "tsc --project config/tsconfig.json",
+    "lint:syntax": "eslint --fix -c ./config/.eslintrc ./src ./test --ext .ts",
+    "lint:format": "prettier --write  --config ./config/.prettierrc ./src/**/*.ts ./test/**/*.ts",
+    "lint": "npm run lint:syntax && npm run lint:format",
+    "test:unit": "jest --config config/jest.config.js",
+    "test:integration": "npm unlink && npm link && browsability --config ./docs/ && npm unlink",
+    "test": "npm run test:unit && npm run test:integration"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build && npm run lint",
+      "pre-push": "npm test"
+    }
+  },
+  "dependencies": {
+    "css": "^3.0.0",
+    "hjson": "^3.2.1",
+    "mdn-browser-compat-data": "^1.0.29"
+  },
+  "devDependencies": {
+    "@types/hjson": "^2.4.2",
+    "@types/jest": "^26.0.4",
+    "@types/node": "^14.0.20",
+    "@typescript-eslint/eslint-plugin": "^3.6.0",
+    "@typescript-eslint/parser": "^3.6.0",
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "jest": "^26.1.0",
+    "prettier": "^2.0.5",
+    "ts-jest": "^26.1.1",
+    "ts-node": "^8.10.2",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.6"
+  }
 }
