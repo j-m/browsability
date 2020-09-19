@@ -17,3 +17,5 @@ build/
 /yarn.lock
 config/tsconfig.tsbuildinfo
 coverage/
+
+**/debug.log

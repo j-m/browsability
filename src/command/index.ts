@@ -1,16 +1,16 @@
 import { assess } from './assess'
 import { init } from './init'
-import { Message } from '../util/BrowsabilityMessage'
+import { BrowsabilityMessage } from '../common/BrowsabilityMessage'
 
 export async function parse(args: string[]): Promise<void> {
   switch (args[0]) {
     case '-v':
     case '--version':
-      console.log(Message.VERSION)
+      console.log(BrowsabilityMessage.VERSION)
       break
     case '-h':
     case '--help':
-      console.log(Message.HELP)
+      console.log(BrowsabilityMessage.HELP)
       break
     case '--init':
       await init(args.slice(1))
