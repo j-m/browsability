@@ -1,4 +1,4 @@
-import bcd from 'mdn-browser-compat-data'
+import bcd from '@mdn/browser-compat-data'
 import css from 'css'
 import fs from 'fs'
 
