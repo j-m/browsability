@@ -1,10 +1,9 @@
 import path from 'path'
-import { parse } from 'hjson'
 import { promises as fs } from 'fs'
 import { BrowsabilityError } from '../common/BrowsabilityError'
 import { BrowsabilityConfiguration } from './Configuration'
 
-export const CONFIG_FILE_NAME: string  = `.browsability.hjson`
+export const CONFIG_FILE_NAME: string = `.browsability.js`
 
 async function exists(filepath: string): Promise<boolean> {
   try {
@@ -49,7 +48,7 @@ async function loadFile(location: string): Promise<string> {
 
 async function parseFile(content: string): Promise<BrowsabilityConfiguration> {
   try {
-    const config: BrowsabilityConfiguration = parse(content)
+    const config: BrowsabilityConfiguration = JSON.parse(content)
     return config
   } catch (error) {
     throw BrowsabilityError.PARSE_FAILED(error)
