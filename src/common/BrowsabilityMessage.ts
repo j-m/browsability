@@ -5,7 +5,7 @@ export class BrowsabilityMessage {
 
   static readonly HELP = new BrowsabilityMessage(
     'HELP',
-`
+    `
 browsability <command>
 <command>:
   -v or --version                 Output Browsability version
