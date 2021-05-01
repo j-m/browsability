@@ -12,6 +12,7 @@ build/
 *-error.log
 /.nyc_output
 /dist
+/bin
 /lib
 /tmp
 /yarn.lock
