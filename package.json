@@ -52,6 +52,7 @@
     "mdn-browser-compat-data": "^1.1.2"
   },
   "devDependencies": {
+    "@types/css": "0.0.31",
     "@types/jest": "^26.0.23",
     "@types/node": "^14.14.43",
     "@typescript-eslint/eslint-plugin": "^3.10.1",
