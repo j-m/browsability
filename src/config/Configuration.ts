@@ -23,12 +23,8 @@ export const defaultConfig: BrowsabilityConfiguration[] = [
     css: true,
     html: true,
     javascript: true,
-    include: [
-      "./**/*",
-    ],
-    exclude: [
-      "**/node_modules/**",
-    ],
-    assess: "all",
+    include: ['./**/*'],
+    exclude: ['**/node_modules/**'],
+    assess: 'all',
   },
 ]
