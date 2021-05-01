@@ -33,6 +33,7 @@
   ],
   "scripts": {
     "build": "tsc --project config/tsconfig.json",
+    "commit": "cz",
     "lint:syntax": "eslint --fix -c ./config/.eslintrc ./src ./test --ext .ts",
     "lint:format": "prettier --write  --config ./config/.prettierrc ./src/**/*.ts ./test/**/*.ts",
     "lint": "npm run lint:syntax && npm run lint:format",
@@ -40,6 +41,11 @@
     "test:integration": "npm unlink && npm link && browsability --config ./docs/ && npm unlink",
     "test": "npm run test:unit && npm run test:integration",
     "prepare": "husky install config/husky"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "dependencies": {
     "@mdn/browser-compat-data": "^3.3.2",
@@ -53,6 +59,7 @@
     "@types/node": "^15.0.1",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
