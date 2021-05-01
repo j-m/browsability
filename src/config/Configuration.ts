@@ -1,36 +1,34 @@
-export type Browser = 'all' | string
+export type Browser = 'chrome' | 'firefox' | 'safari' | 'edge' | 'ie'
 
-export type Version = 'report' | 'current' | number
+export type Version = 'current' | number
 
 export type BrowserVersions = { [key in Browser]: Version }
 
+export type Scope = 'full' | 'diff'
+
 export type BrowsabilityConfiguration = {
-  full: boolean
-  css?: string[]
-  html?: string[]
-  javascript?: string[]
-  versions?: BrowserVersions
+  scope: Scope
+  css?: boolean
+  html?: boolean
+  javascript?: boolean
+  include: string[]
+  exclude?: string[]
+  versions?: Partial<BrowserVersions>
+  assess?: Browser[] | 'all'
 }
 
-export const defaultConfig: BrowsabilityConfiguration = {
-  full: true,
-  html: ["**/*.html","!**/node_modules/**"],
-  css: ["**/*.css","!**/node_modules/**"],
-  javascript: ["**/*.js","!**/node_modules/**"],
-}
-
-{
-  scope: 'changes',
-  include: ["./src/public/**"],
-  exclude: ["**/node_modules/**"],
-  assess: {
-    javascript: false,
-    css: false,
-    html: false,
-    versions: {
-      chrome: current,
-      firefox: report,
-      ie: 10,
-    }
-  }
-}
+export const defaultConfig: BrowsabilityConfiguration[] = [
+  {
+    scope: 'diff',
+    css: true,
+    html: true,
+    javascript: true,
+    include: [
+      "./**/*",
+    ],
+    exclude: [
+      "**/node_modules/**",
+    ],
+    assess: "all",
+  },
+]
