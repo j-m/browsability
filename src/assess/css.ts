@@ -1,10 +1,8 @@
-const bcd = require('mdn-browser-compat-data'),
-    css = require('css'),
-    fs = require('fs'),
-    jsonfile = require('jsonfile'),
-    exports = module.exports = {};
-    
-function getFileCssProperties(contents) {
+import bcd from 'mdn-browser-compat-data'
+import css from 'css'
+import fs from 'fs'
+
+export function getFileCssProperties(contents) {
   contents = contents.substring(contents.indexOf("<style>") + 7);
   contents = contents.substring(0, contents.indexOf("</style>"));
   if (contents.length < 1) return [];
@@ -16,13 +14,13 @@ function getFileCssProperties(contents) {
   if (rules == null) return [];
 
   for (var i = 0; i < rules.length; i++) {
-      var declarations = rules[i].declarations;
-      if (declarations == null) return [];
-      for (var j = 0; j < declarations.length; j++) {
-          var property = declarations[j].property;
-          if (property == null) return [];
-          properties.push(property);
-      }
+    var declarations = rules[i].declarations;
+    if (declarations == null) return [];
+    for (var j = 0; j < declarations.length; j++) {
+      var property = declarations[j].property;
+      if (property == null) return [];
+      properties.push(property);
+    }
   }
 
   return properties;
