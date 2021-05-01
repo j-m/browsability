@@ -1,31 +1,70 @@
 {
   "name": "browsability",
-  "version": "0.0.0",
   "description": "browsability",
-  "main": "server.js",
+  "version": "0.1.0",
   "author": {
-    "name": "jrmar"
+    "name": "Jonathan Marsh",
+    "email": "hello@jonmarsh.dev",
+    "url": "https://www.jonmarsh.dev"
+  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": "j-m/browsability",
+  "bugs": "https://github.com/j-m/browsability/issues",
+  "homepage": "https://github.com/j-m/browsability",
+  "keywords": [
+    "browser",
+    "compatibility",
+    "analyser",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "bin": {
+    "browsability": "./bin/run"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "scripts": {
+    "build": "tsc --project config/tsconfig.json",
+    "lint:syntax": "eslint --fix -c ./config/.eslintrc ./src ./test --ext .ts",
+    "lint:format": "prettier --write  --config ./config/.prettierrc ./src/**/*.ts ./test/**/*.ts",
+    "lint": "npm run lint:syntax && npm run lint:format",
+    "test:unit": "jest --config=config/jest.config.js",
+    "test:integration": "npm unlink && npm link && browsability --config ./docs/ && npm unlink",
+    "test": "npm run test:unit && npm run test:integration"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build && npm run lint"
+    }
   },
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "css": "^2.2.1",
-    "dotenv-safe": "^5.0.1",
-    "express": "^4.16.2",
-    "glob": "^7.1.2",
-    "jsonfile": "^4.0.0",
-    "mdn-browser-compat-data": "0.0.25",
-    "morgan": "^1.9.0",
-    "nodegit": "^0.20.3",
-    "request": "^2.83.0",
-    "url": "^0.11.0"
-  },
-  "repository": "https://github.com/jon-marsh/browsability",
-  "license": "MIT",
-  "scripts": {
-    "debug": "rm -rf clones/tmp-*/ && node app.js",
-    "forward": "./ngrok http 8084"
+    "css": "^3.0.0",
+    "fast-glob": "^3.2.4",
+    "htmlparser2": "^4.1.0",
+    "mdn-browser-compat-data": "^1.0.30"
   },
   "devDependencies": {
-    "nodemon": "^1.15.1"
+    "@types/jest": "^26.0.4",
+    "@types/node": "^14.0.22",
+    "@typescript-eslint/eslint-plugin": "^3.6.0",
+    "@typescript-eslint/parser": "^3.6.0",
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "jest": "^26.1.0",
+    "prettier": "^2.0.5",
+    "ts-jest": "^26.1.2",
+    "ts-node": "^8.10.2",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.6"
   }
 }
