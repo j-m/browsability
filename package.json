@@ -32,6 +32,7 @@
     "/lib"
   ],
   "scripts": {
+    "changelog": "conventional-changelog -p angular -i docs/CHANGELOG.md -s",
     "build": "tsc --project config/tsconfig.json",
     "commit": "cz",
     "lint:syntax": "eslint --fix -c ./config/.eslintrc ./src ./test --ext .ts",
@@ -59,6 +60,8 @@
     "@types/node": "^15.0.1",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
+    "commitizen": "^4.2.3",
+    "conventional-changelog-cli": "^2.1.1",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
