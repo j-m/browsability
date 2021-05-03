@@ -1,7 +1,7 @@
 {
   "name": "browsability",
   "description": "browsability",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "author": {
     "name": "Jonathan Marsh",
     "email": "hello@jonmarsh.dev",
@@ -32,16 +32,16 @@
     "/lib"
   ],
   "scripts": {
-    "changelog": "conventional-changelog -p angular -i docs/CHANGELOG.md -s",
     "build": "tsc --project config/tsconfig.json",
     "commit": "cz",
-    "lint:syntax": "eslint --fix -c ./config/.eslintrc ./src ./test --ext .ts",
     "lint:format": "prettier --write  --config ./config/.prettierrc ./src/**/*.ts ./test/**/*.ts",
+    "lint:syntax": "eslint --fix -c ./config/.eslintrc ./src ./test --ext .ts",
     "lint": "npm run lint:syntax && npm run lint:format",
-    "test:unit": "jest --config=config/jest.config.js",
+    "prepare": "husky install config/husky",
     "test:integration": "npm unlink && npm link && browsability --config ./docs/ && npm unlink",
+    "test:unit": "jest --config=config/jest.config.js",
     "test": "npm run test:unit && npm run test:integration",
-    "prepare": "husky install config/husky"
+    "version": "conventional-changelog -p angular -i docs/CHANGELOG.md -s && git add docs/CHANGELOG.md"
   },
   "config": {
     "commitizen": {
