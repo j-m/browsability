@@ -1,7 +1,7 @@
 {
   "name": "browsability",
   "description": "browsability",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "author": {
     "name": "Jonathan Marsh",
     "email": "hello@jonmarsh.dev",
@@ -33,13 +33,20 @@
   ],
   "scripts": {
     "build": "tsc --project config/tsconfig.json",
-    "lint:syntax": "eslint --fix -c ./config/.eslintrc ./src ./test --ext .ts",
+    "commit": "cz",
     "lint:format": "prettier --write  --config ./config/.prettierrc ./src/**/*.ts ./test/**/*.ts",
+    "lint:syntax": "eslint --fix -c ./config/.eslintrc ./src ./test --ext .ts",
     "lint": "npm run lint:syntax && npm run lint:format",
-    "test:unit": "jest --config=config/jest.config.js",
+    "prepare": "husky install config/husky",
     "test:integration": "npm unlink && npm link && browsability --config ./docs/ && npm unlink",
+    "test:unit": "jest --config=config/jest.config.js",
     "test": "npm run test:unit && npm run test:integration",
-    "prepare": "husky install config/husky"
+    "version": "conventional-changelog -p angular -i docs/CHANGELOG.md -s && git add docs/CHANGELOG.md"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "dependencies": {
     "@mdn/browser-compat-data": "^3.3.2",
@@ -53,6 +60,9 @@
     "@types/node": "^15.0.1",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
+    "commitizen": "^4.2.3",
+    "conventional-changelog-cli": "^2.1.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
