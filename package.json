@@ -33,6 +33,7 @@
   ],
   "scripts": {
     "build": "tsc --project config/tsconfig.json",
+    "clean": "rimraf lib",
     "commit": "cz",
     "lint:format": "prettier --write  --config ./config/.prettierrc ./src/**/*.ts ./test/**/*.ts",
     "lint:syntax": "eslint --fix -c ./config/.eslintrc ./src ./test --ext .ts",
@@ -69,6 +70,7 @@
     "husky": "^6.0.0",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
+    "rimraf": "^3.0.2",
     "ts-jest": "^26.5.5",
     "ts-node": "^9.1.1",
     "tslib": "^2.2.0",
