@@ -1,21 +1,22 @@
-node_modules/
-build/
 .vs/
 .vscode/
-
 *.sln
 *.njsproj
 
-.env
-
 *-debug.log
+**/debug.log
 *-error.log
 /.nyc_output
-/dist
-/lib
 /tmp
 /yarn.lock
 config/tsconfig.tsbuildinfo
-coverage/
+.rollup.cache
 
-**/debug.log
+node_modules/
+.env
+
+/build
+/lib
+/typings
+
+coverage/

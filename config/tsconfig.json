@@ -3,18 +3,14 @@
     "composite": true,
     "declaration": true,
     "importHelpers": true,
-    "module": "commonjs",
     "outDir": "../lib",
+    "declarationDir": "../typings",
     "rootDir": "../",
+    "baseUrl": "../src",
     "strict": true,
-    "target": "es2017",
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true
+    "target": "es5",
+    "lib": ["es5", "es6", "dom"],
+    "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "../src/**/*.ts",
-    "../package.json"
-  ]
+  "include": ["../src/**/*.ts"]
 }

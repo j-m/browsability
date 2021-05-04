@@ -42,7 +42,7 @@ async function loadFile(location: string): Promise<string> {
     const content: string = await fs.readFile(location, 'utf8')
     return content
   } catch (error) {
-    throw BrowsabilityError.READ_FAILED(...location, error)
+    throw BrowsabilityError.READ_FAILED(location, error)
   }
 }
 
