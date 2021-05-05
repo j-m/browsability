@@ -36,7 +36,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rollup -c config/rollup.config.js",
+    "build": "npm run clean && rollup -c config/rollup.config.js && rimraf lib/typings",
     "clean": "rimraf lib build .rollup.cache",
     "commit": "cz",
     "compile": "tsc --project config/tsconfig.json",
@@ -44,7 +44,6 @@
     "lint:syntax": "eslint --fix -c ./config/.eslintrc ./src ./test --ext .ts",
     "lint": "npm run lint:syntax && npm run lint:format",
     "prepare": "husky install config/husky",
-    "test:integration": "npm unlink && npm link && browsability --config ./docs/ && npm unlink",
     "test:unit": "jest --config=config/jest.config.js",
     "test": "npm run test:unit && npm run test:integration",
     "version": "conventional-changelog -p angular -i docs/CHANGELOG.md -s && git add docs/CHANGELOG.md"
@@ -63,6 +62,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^18.0.0",
     "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-replace": "^2.4.2",
     "@rollup/plugin-typescript": "^8.2.1",
     "@types/css": "0.0.31",
@@ -81,6 +81,7 @@
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.46.0",
+    "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-dts": "^3.0.1",
     "ts-jest": "^26.5.5",
     "ts-node": "^9.1.1",

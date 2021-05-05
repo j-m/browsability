@@ -2,7 +2,7 @@ import { assess } from './assess'
 import { init } from './init'
 import { BrowsabilityMessage } from '../common/BrowsabilityMessage'
 
-export async function parse(args: string[]): Promise<void> {
+export default async function parse(args: string[]): Promise<void> {
   switch (args[0]) {
     case '-v':
     case '--version':

@@ -8,6 +8,7 @@
 *-error.log
 /.nyc_output
 /tmp
+*.tgz
 /yarn.lock
 config/tsconfig.tsbuildinfo
 .rollup.cache
