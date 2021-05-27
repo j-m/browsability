@@ -1,9 +1,10 @@
-import { parse } from '../../../src/command'
-import { assess } from '../../../src/command/assess'
-import { init } from '../../../src/command/init'
-import { BrowsabilityMessage } from '../../../src/common/BrowsabilityMessage'
-jest.mock('../../../src/command/assess')
-jest.mock('../../../src/command/init')
+import { parse } from './parse'
+import { assess } from './assess'
+import { init } from './init'
+import { BrowsabilityMessage } from '../common/BrowsabilityMessage'
+
+jest.mock('./assess')
+jest.mock('./init')
 global.console.log = jest.fn()
 
 describe('version', () => {

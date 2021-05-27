@@ -1,4 +1,4 @@
-import parse from './command/parse'
+import { parse } from './command/parse'
 
 export default function browsability(argv?: string[]): void {
   const [, , ...args] = process.argv

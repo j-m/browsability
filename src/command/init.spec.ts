@@ -1,4 +1,4 @@
-import { init } from '../../../src/command/init'
+import { init } from './init'
 
 describe('init', () => {
   test('does nothing', async (done) => {

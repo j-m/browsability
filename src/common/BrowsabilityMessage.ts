@@ -1,5 +1,5 @@
 export class BrowsabilityMessage {
-  private constructor(public id: string, public message: string) { }
+  private constructor(public id: string, public message: string) {}
 
   static readonly HELP = new BrowsabilityMessage(
     'HELP',
@@ -24,5 +24,8 @@ Run 'browsability -e' for examples
 `
   )
 
-  static readonly VERSION = new BrowsabilityMessage('VERSION', process.env.npm_package_version || "unknown")
+  static readonly VERSION = new BrowsabilityMessage(
+    'VERSION',
+    process.env.npm_package_version || 'unknown'
+  )
 }
