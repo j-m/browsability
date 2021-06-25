@@ -4,8 +4,8 @@
     "module": "esnext",
     "outDir": "lib",
     "declarationDir": "typings",
-    "rootDir": "../src",
-    "baseUrl": "../src",
+    "rootDir": "src",
+    "baseUrl": "src",
     "target": "es5",
     "lib": ["es5", "es6", "dom"],
     "declaration": true,
@@ -13,12 +13,11 @@
     "sourceMap": false,
     "importHelpers": true,
     "resolveJsonModule": true,
-
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "removeComments": true
   },
-  "include": ["../src/**/*.ts"],
-  "files": ["../src/index.ts"]
+  "include": ["src/**/*.ts"],
+  "files": ["src/index.ts"]
 }

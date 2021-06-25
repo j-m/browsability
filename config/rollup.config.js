@@ -27,7 +27,7 @@ export default [
       resolve(),
       json(),
       commonjs(),
-      typescript({ tsconfig: 'config/tsconfig.json' }),
+      typescript({ tsconfig: 'tsconfig.json' }),
       replace({
         'process.env.npm_package_version ': version,
         preventAssignment: true,
@@ -36,7 +36,7 @@ export default [
     ],
   },
   {
-    input: 'lib/typings/index.d.ts',
+    input: 'typings/index.d.ts',
     output: [{ file: 'lib/index.d.ts' }],
     plugins: [dts()],
   },
