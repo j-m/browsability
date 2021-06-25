@@ -31,13 +31,14 @@
   "files": [
     "/bin",
     "/lib",
+    "/typings",
     "package.json",
     "LICENSE",
     "README.md"
   ],
   "scripts": {
-    "build": "npm run clean && rollup -c config/rollup.config.js && rimraf lib/typings",
-    "clean": "rimraf lib build .rollup.cache",
+    "build": "npm run clean && npm run compile",
+    "clean": "rimraf lib build",
     "commit": "cz",
     "compile": "tsc",
     "lint:fix": "npm run lint -- --fix && prettier --write ./src/**/*.ts",
@@ -59,11 +60,6 @@
     "htmlparser2": "^6.1.0"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^18.0.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.0.0",
-    "@rollup/plugin-replace": "^2.4.2",
-    "@rollup/plugin-typescript": "^8.2.1",
     "@types/css": "0.0.31",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.0.1",
@@ -79,9 +75,6 @@
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.46.0",
-    "rollup-plugin-cleanup": "^3.2.1",
-    "rollup-plugin-dts": "^3.0.1",
     "ts-jest": "~26.5",
     "ts-node": "^9.1.1",
     "tslib": "^2.2.0",
