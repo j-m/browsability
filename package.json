@@ -9,7 +9,6 @@
   },
   "license": "MIT",
   "main": "lib/index.js",
-  "module": "lib/index.mjs",
   "typings": "lib/index.d.ts",
   "repository": "j-m/browsability",
   "bugs": "https://github.com/j-m/browsability/issues",
