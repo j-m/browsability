@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "moduleResolution": "node",
-    "outDir": "lib",
-    "declarationDir": "typings",
-    "rootDir": "src",
-    "baseUrl": "src",
+    "outDir": "../lib",
+    "declarationDir": "../typings",
+    "rootDir": ".",
+    "baseUrl": ".",
     "target": "es5",
     "lib": ["es5"],
     "declaration": true,
@@ -17,7 +17,7 @@
     "noImplicitAny": true,
     "removeComments": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.spec.ts"],
-  "files": ["src/index.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["**/*.spec.ts"],
+  "files": ["index.ts"]
 }

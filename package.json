@@ -39,7 +39,7 @@
     "build": "npm run clean && npm run compile",
     "clean": "rimraf lib typings",
     "commit": "cz",
-    "compile": "tsc",
+    "compile": "tsc --project src/tsconfig.json",
     "lint:fix": "npm run lint -- --fix && prettier --write ./src/**/*.ts",
     "lint": "eslint ./src --ext .ts",
     "prepare": "husky install config/husky",
