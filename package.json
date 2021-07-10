@@ -37,7 +37,7 @@
   ],
   "scripts": {
     "build": "npm run clean && npm run compile",
-    "clean": "rimraf lib build",
+    "clean": "rimraf lib typings",
     "commit": "cz",
     "compile": "tsc",
     "lint:fix": "npm run lint -- --fix && prettier --write ./src/**/*.ts",

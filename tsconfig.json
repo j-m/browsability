@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "moduleResolution": "node",
-    "module": "esnext",
     "outDir": "lib",
     "declarationDir": "typings",
     "rootDir": "src",
@@ -19,5 +18,6 @@
     "removeComments": true
   },
   "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.spec.ts"],
   "files": ["src/index.ts"]
 }
