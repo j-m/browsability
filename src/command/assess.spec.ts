@@ -1,4 +1,4 @@
-import { assess } from '../../../src/command/assess'
+import { assess } from './assess'
 
 describe('assess', () => {
   test('does nothing', async (done) => {

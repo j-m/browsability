@@ -1,5 +1,3 @@
-import { version } from '../../package.json'
-
 export class BrowsabilityMessage {
   private constructor(public id: string, public message: string) {}
 
@@ -26,5 +24,8 @@ Run 'browsability -e' for examples
 `
   )
 
-  static readonly VERSION = new BrowsabilityMessage('VERSION', version)
+  static readonly VERSION = new BrowsabilityMessage(
+    'VERSION',
+    process.env.npm_package_version || 'unknown'
+  )
 }
