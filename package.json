@@ -44,6 +44,7 @@
     "lint": "eslint ./src --ext .ts",
     "prepare": "husky install config/husky",
     "test:unit": "jest --config=config/jest.config.js",
+    "test:integration": "node bin/run --config ./docs/",
     "test": "npm run test:unit",
     "version": "conventional-changelog -p angular -i docs/CHANGELOG.md -s && git add docs/CHANGELOG.md"
   },
