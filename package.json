@@ -2,15 +2,13 @@
   "name": "browsability",
   "description": "browsability",
   "version": "0.5.0",
+  "license": "MIT",
+  "repository": "j-m/browsability",
   "author": {
     "name": "Jonathan Marsh",
     "email": "hello@jonmarsh.dev",
     "url": "https://www.jonmarsh.dev"
   },
-  "license": "MIT",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
-  "repository": "j-m/browsability",
   "bugs": "https://github.com/j-m/browsability/issues",
   "homepage": "https://github.com/j-m/browsability",
   "keywords": [
@@ -24,6 +22,8 @@
   "engines": {
     "node": ">=16.0.0"
   },
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "bin": {
     "browsability": "./bin/run"
   },
