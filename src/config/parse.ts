@@ -1,3 +1,4 @@
+import glob from 'fast-glob'
 import path from 'path'
 import { promises as fs } from 'fs'
 import { BrowsabilityError } from '../common/BrowsabilityError'
@@ -46,18 +47,24 @@ async function loadFile(location: string): Promise<string> {
   }
 }
 
-async function parseFile(content: string): Promise<BrowsabilityConfiguration> {
+async function parseFile(content: string): Promise<BrowsabilityConfiguration[]> {
   try {
-    const config: BrowsabilityConfiguration = JSON.parse(content)
+    const config: BrowsabilityConfiguration[] = JSON.parse(content)
     return config
   } catch (error) {
     throw BrowsabilityError.PARSE_FAILED(error)
   }
 }
 
-export async function load(file: string): Promise<BrowsabilityConfiguration> {
+async function expandGlobs(config: BrowsabilityConfiguration[]): Promise<BrowsabilityConfiguration[]> {
+  // TODO await glob('./**/*.js', { ignore: config.exclude })
+  return config
+}
+
+export async function load(file: string): Promise<BrowsabilityConfiguration[]> {
   const location: string = await parseLocation(file)
   const content: string = await loadFile(location)
-  const config: BrowsabilityConfiguration = await parseFile(content)
-  return config
+  const configWithGlobbedFilePaths: BrowsabilityConfiguration[] = await parseFile(content)
+  const configWithExpandedFilePaths: BrowsabilityConfiguration[] = await expandGlobs(configWithGlobbedFilePaths)
+  return configWithExpandedFilePaths
 }
