@@ -1,8 +1,15 @@
-import { assess } from '../assess'
-import { init } from '../init'
+
+import assess from '../assess'
+import { BrowsabilityConfiguration } from '../config/Configuration'
 import { BrowsabilityMessage } from '../common/BrowsabilityMessage'
 
-export default async function parse(args: string[]): Promise<void> {
+function init(args: string[]): void { return }
+
+export function parseCommand(args: string[]): BrowsabilityConfiguration[] {
+  return []
+}
+
+export default async function cli(args: string[]): Promise<void> {
   switch (args[0]) {
     case '-v':
     case '--version':
@@ -16,7 +23,7 @@ export default async function parse(args: string[]): Promise<void> {
       await init(args.slice(1))
       break
     default:
-      await assess(args)
+      await assess(parseCommand(args), "")
       break
   }
 }

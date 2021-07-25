@@ -1,5 +1,6 @@
-import { BrowsabilityConfiguration } from 'config/Configuration'
-import { cli } from './cli/parse'
+import assess from './assess'
+import cli from './cli'
+import { BrowsabilityConfiguration } from './config/Configuration'
 
 export default function browsability(config: BrowsabilityConfiguration[], cwd: string): void {
   assess(config, cwd)
