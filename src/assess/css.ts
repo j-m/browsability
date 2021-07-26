@@ -4,21 +4,26 @@ import { parse, Declaration, Rule } from 'css'
 import { BrowserNames } from '@mdn/browser-compat-data/types'
 import { data } from '../data/css'
 
-export function getPropertiesFromCSS(css: string): string[] {
-  const properties = []
+export type PropertyValueOccurrence = { [key in string]: { [key in string]: true } }
+
+export function getPropertiesFromCSS(css: string): PropertyValueOccurrence {
+  const properties: PropertyValueOccurrence = {}
 
   const cssObj = parse(css)
-  if (!cssObj || !cssObj.stylesheet) return []
+  if (!cssObj || !cssObj.stylesheet) return {}
   const rules = cssObj.stylesheet.rules
-  if (!rules) return []
+  if (!rules) return {}
 
-  for (let i = 0; i < rules.length; i++) {
-    const declarations = (rules[i] as Rule).declarations
+  for (const rule of rules) {
+    const declarations = (rule as Rule).declarations
     if (!declarations) continue
-    for (let j = 0; j < declarations.length; j++) {
-      const property = (declarations[j] as Declaration).property
+    for (const declaration of declarations) {
+      const property = (declaration as Declaration).property
       if (!property) continue
-      properties.push(property)
+      const value = (declaration as Declaration).value
+      if (!value) continue
+      if (!properties[property]) properties[property] = {}
+      properties[property][value] = true
     }
   }
   return properties
@@ -88,12 +93,7 @@ async function extractRawCSS(fileNames: string[]): Promise<string[]> {
   return aggregatedRawCSS
 }
 
-export async function analyseCSS(fileNames: string[]): Promise<void> {
-  const css = await extractRawCSS(fileNames)
-  const properties: string[] = []
-  css.forEach((css) => {
-    properties.push(...getPropertiesFromCSS(css))
-  })
+function calculateMinimums(properties: PropertyValueOccurrence) {
   const minimumSupport: { [key in BrowserNames]: number } = {
     'chrome': 0,
     'chrome_android': 0,
@@ -109,16 +109,33 @@ export async function analyseCSS(fileNames: string[]): Promise<void> {
     'samsunginternet_android': 0,
     'webview_android': 0
   }
-  properties.forEach((property) => {
-    const propertySupport = data[property]
-    if (!propertySupport) {
-      return
-    }
-    Object.entries(propertySupport).forEach(([browser, version]) => {
-      if (minimumSupport[browser as BrowserNames] < version) {
-        minimumSupport[browser as BrowserNames] = version
-      }
+  Object.entries(properties).forEach(([property, values]) => {
+    Object.keys(values).forEach((value) => {
+      if (!data[property]) return
+      const support = data[property][value]
+      if (!support) return
+      Object.entries(support).forEach(([browser, version]) => {
+        if (minimumSupport[browser as BrowserNames] < version) {
+          minimumSupport[browser as BrowserNames] = version
+        }
+      })
     })
   })
-  console.log(minimumSupport)
+  return minimumSupport
+}
+
+export async function analyseCSS(fileNames: string[]): Promise<void> {
+  const css = await extractRawCSS(fileNames)
+  const properties: PropertyValueOccurrence = {}
+  css.forEach((css) => {
+    Object.entries(getPropertiesFromCSS(css)).forEach(([property, values]) => {
+      Object.keys(values).forEach((value) => {
+        if (!properties[property]) {
+          properties[property] = {}
+        }
+        properties[property][value] = true
+      })
+    })
+  })
+  console.log(calculateMinimums(properties))
 }
