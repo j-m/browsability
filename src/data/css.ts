@@ -1,32 +1,36 @@
 import * as bcd from '@mdn/browser-compat-data/data.json'
 import { BrowserNames, SimpleSupportStatement } from '@mdn/browser-compat-data/types'
 
-function mapSupportToVersion(support: any): { [key in BrowserNames]: number } {
+export type Support = { [key in BrowserNames]: number }
+export type PropertyValues = { [key in string]: Support | undefined }
+export type PropertySupport = { support: Support | undefined, values: PropertyValues }
+
+function mapSupport(support: any): Support | undefined {
+  if (!support) return undefined
   return Object.entries(support)
     .reduce((accumulator, [browser, support]) =>
       ({ ...accumulator, [browser]: (support as SimpleSupportStatement).version_added })
-      , {} as { [key in BrowserNames]: number })
+      , {} as Support)
 }
 
-function mapValuesToVersion(propertyData: any): { [key in string]: { [key in BrowserNames]: number } | undefined } {
+function mapProperty(propertyData: any): PropertyValues {
   return Object.entries(propertyData as any).reduce((accumulator, [value, valueData]) => {
     const support = (valueData as any)?.__compat?.support
     if (!support) return accumulator
     return {
-      ...accumulator, [value]: support ? mapSupportToVersion(support)
-        : undefined
+      ...accumulator, [value]: mapSupport(support)
     }
-  }, {} as { [key in string]: { [key in BrowserNames]: number } | undefined })
+  }, {} as PropertyValues)
 }
 
-function mapPropertyToVersion(properties: any) {
+function mapProperties(properties: any) {
   return Object.entries(properties)
     .reduce((accumulator, [property, propertyData]) => ({
       ...accumulator,
-      [property]: mapValuesToVersion(propertyData)
+      [property]: { support: mapSupport((propertyData as any)?.__compat?.support), values: mapProperty(propertyData) }
     })
-      , {} as { [key in string]: { [key in string]: { [key in BrowserNames]: number } | undefined } })
+      , {} as { [key in string]: PropertySupport })
 }
 
-export const data = mapPropertyToVersion((bcd as any).css.properties)
+export const data = mapProperties((bcd as any).css.properties)
 

@@ -2,7 +2,7 @@ import { readFile } from 'fs/promises'
 
 import { parse, Declaration, Rule } from 'css'
 import { BrowserNames } from '@mdn/browser-compat-data/types'
-import { data } from '../data/css'
+import { data, Support } from '../data/css'
 
 export type PropertyValueOccurrence = { [key in string]: { [key in string]: true } }
 
@@ -93,8 +93,14 @@ async function extractRawCSS(fileNames: string[]): Promise<string[]> {
   return aggregatedRawCSS
 }
 
-function calculateMinimums(properties: PropertyValueOccurrence) {
-  const minimumSupport: { [key in BrowserNames]: number } = {
+function maximum(supportA: Support, supportB: Support): Support {
+  return Object.entries(supportA).reduce((accumulator, [browser, version]) => ({
+    ...accumulator, [browser]: (supportB[browser as BrowserNames] > version) ? supportB[browser as BrowserNames] : version
+  }), {} as Support)
+}
+
+function calculateMinimumSupport(properties: PropertyValueOccurrence) {
+  let minimumSupport: Support = {
     'chrome': 0,
     'chrome_android': 0,
     'edge': 0,
@@ -110,15 +116,12 @@ function calculateMinimums(properties: PropertyValueOccurrence) {
     'webview_android': 0
   }
   Object.entries(properties).forEach(([property, values]) => {
+    if (!data[property]) return
+    if (data[property].support) minimumSupport = maximum(minimumSupport, data[property].support!)
     Object.keys(values).forEach((value) => {
-      if (!data[property]) return
-      const support = data[property][value]
+      const support = data[property].values[value]
       if (!support) return
-      Object.entries(support).forEach(([browser, version]) => {
-        if (minimumSupport[browser as BrowserNames] < version) {
-          minimumSupport[browser as BrowserNames] = version
-        }
-      })
+      minimumSupport = maximum(minimumSupport, support)
     })
   })
   return minimumSupport
@@ -137,5 +140,5 @@ export async function analyseCSS(fileNames: string[]): Promise<void> {
       })
     })
   })
-  console.log(calculateMinimums(properties))
+  console.log(calculateMinimumSupport(properties))
 }
