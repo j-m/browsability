@@ -4,7 +4,11 @@ import { parse, Declaration, Rule } from 'css'
 import { BrowserNames } from '@mdn/browser-compat-data/types'
 import { data, Support } from '../data/css'
 
-export type PropertyValueOccurrence = { [key in string]: { [key in string]: true } }
+export interface Position {
+  line: number;
+  column: number;
+}
+export type PropertyValueOccurrence = { [key in string]: { [key in string]: Position[] } }
 
 export function getPropertiesFromCSS(css: string): PropertyValueOccurrence {
   const properties: PropertyValueOccurrence = {}
@@ -23,7 +27,8 @@ export function getPropertiesFromCSS(css: string): PropertyValueOccurrence {
       const value = (declaration as Declaration).value
       if (!value) continue
       if (!properties[property]) properties[property] = {}
-      properties[property][value] = true
+      if (!properties[property][value]) properties[property][value] = []
+      properties[property][value].push(((declaration as Declaration).position?.start) as Position)
     }
   }
   return properties
@@ -99,25 +104,29 @@ function maximum(supportA: Support, supportB: Support): Support {
   }), {} as Support)
 }
 
+const ZERO_SUPPORT: Support = {
+  'chrome': 0,
+  'chrome_android': 0,
+  'edge': 0,
+  'firefox': 0,
+  'firefox_android': 0,
+  'ie': 0,
+  'nodejs': 0,
+  'opera': 0,
+  'opera_android': 0,
+  'safari': 0,
+  'safari_ios': 0,
+  'samsunginternet_android': 0,
+  'webview_android': 0
+}
+
 function calculateMinimumSupport(properties: PropertyValueOccurrence) {
-  let minimumSupport: Support = {
-    'chrome': 0,
-    'chrome_android': 0,
-    'edge': 0,
-    'firefox': 0,
-    'firefox_android': 0,
-    'ie': 0,
-    'nodejs': 0,
-    'opera': 0,
-    'opera_android': 0,
-    'safari': 0,
-    'safari_ios': 0,
-    'samsunginternet_android': 0,
-    'webview_android': 0
-  }
+  let minimumSupport: Support = { ...ZERO_SUPPORT }
   Object.entries(properties).forEach(([property, values]) => {
     if (!data[property]) return
-    if (data[property].support) minimumSupport = maximum(minimumSupport, data[property].support!)
+    const propertySupport = data[property].support
+    if (!propertySupport) return
+    minimumSupport = maximum(minimumSupport, propertySupport)
     Object.keys(values).forEach((value) => {
       const support = data[property].values[value]
       if (!support) return
@@ -127,18 +136,25 @@ function calculateMinimumSupport(properties: PropertyValueOccurrence) {
   return minimumSupport
 }
 
-export async function analyseCSS(fileNames: string[]): Promise<void> {
-  const css = await extractRawCSS(fileNames)
-  const properties: PropertyValueOccurrence = {}
+export function getPropertiesFromMultipleCSS(css: string[]): PropertyValueOccurrence {
+  const combinedProperties: PropertyValueOccurrence = {}
   css.forEach((css) => {
-    Object.entries(getPropertiesFromCSS(css)).forEach(([property, values]) => {
+    const properties = getPropertiesFromCSS(css)
+    Object.entries(properties).forEach(([property, values]) => {
       Object.keys(values).forEach((value) => {
-        if (!properties[property]) {
-          properties[property] = {}
-        }
-        properties[property][value] = true
+        if (!combinedProperties[property]) combinedProperties[property] = {}
+        if (!combinedProperties[property][value]) combinedProperties[property][value] = []
+        combinedProperties[property][value].push(...properties[property][value])
       })
     })
   })
-  console.log(calculateMinimumSupport(properties))
+  return combinedProperties
+}
+
+export async function analyseCSS(fileNames: string[]): Promise<void> {
+  const css = await extractRawCSS(fileNames)
+  const properties = getPropertiesFromMultipleCSS(css)
+  const support = calculateMinimumSupport(properties)
+  console.dir(properties, { depth: null })
+  console.dir(support, { depth: null })
 }

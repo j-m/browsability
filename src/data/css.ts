@@ -3,13 +3,19 @@ import { BrowserNames, SimpleSupportStatement } from '@mdn/browser-compat-data/t
 
 export type Support = { [key in BrowserNames]: number }
 export type PropertyValues = { [key in string]: Support | undefined }
-export type PropertySupport = { support: Support | undefined, values: PropertyValues }
+export type Property = { support: Support | undefined, values: PropertyValues }
+
+function mapSupportStatement(support: SimpleSupportStatement): number | undefined {
+  if (typeof support.version_added === "string") {
+    return Number(support.version_added.replace("≤", ""))
+  }
+}
 
 function mapSupport(support: any): Support | undefined {
   if (!support) return undefined
   return Object.entries(support)
     .reduce((accumulator, [browser, support]) =>
-      ({ ...accumulator, [browser]: (support as SimpleSupportStatement).version_added })
+      ({ ...accumulator, [browser]: mapSupportStatement(support as SimpleSupportStatement) })
       , {} as Support)
 }
 
@@ -29,8 +35,7 @@ function mapProperties(properties: any) {
       ...accumulator,
       [property]: { support: mapSupport((propertyData as any)?.__compat?.support), values: mapProperty(propertyData) }
     })
-      , {} as { [key in string]: PropertySupport })
+      , {} as { [key in string]: Property })
 }
 
 export const data = mapProperties((bcd as any).css.properties)
-
