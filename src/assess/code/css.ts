@@ -1,10 +1,6 @@
-import { parse, Declaration, Rule } from 'css'
+import { Declaration, Rule, parse } from 'css'
 
-export interface Position {
-  line: number;
-  column: number;
-}
-export type PropertyValueOccurrence = { [key in string]: { [key in string]: Position[] } }
+import { Position, PropertyValueOccurrence } from '../json/css'
 
 export function getPropertiesFromMultipleCSS(css: string[]): PropertyValueOccurrence {
   const combinedProperties: PropertyValueOccurrence = {}

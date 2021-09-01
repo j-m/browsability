@@ -1,6 +1,13 @@
 import { BrowserNames } from '@mdn/browser-compat-data/types'
-import { data, Support } from '../../data/css'
-import { PropertyValueOccurrence } from '../code/css'
+
+import { Support, data } from '../../data/css'
+
+export interface Position {
+  line: number;
+  column: number;
+}
+
+export type PropertyValueOccurrence = { [key in string]: { [key in string]: Position[] } }
 
 function maximum(supportA: Support, supportB: Support): Support {
   return Object.entries(supportA).reduce((accumulator, [browser, version]) => ({

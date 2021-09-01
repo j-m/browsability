@@ -43,7 +43,7 @@ export async function getCSSFromCSSFile(fileName: string): Promise<string[]> {
 }
 
 export async function getCSSFromFile(fileName: string): Promise<string[]> {
-  const fileExtension = fileName.split('.').pop();
+  const fileExtension = fileName.split('.').pop()
   switch (fileExtension) {
     case "html":
       return await getCSSFromHTMLFile(fileName)
