@@ -1,6 +1,6 @@
-import { getPropertiesFromMultipleCSS } from "./code/css"
-import { calculateMinimumSupport } from "./json/css"
-import { extractRawCSS } from "./files/css"
+import { getPropertiesFromMultipleCSS } from './code/css'
+import { calculateMinimumSupport } from './json/css'
+import { extractRawCSS } from './files/css'
 
 export async function analyseCSS(fileNames: string[]): Promise<void> {
   const css = await extractRawCSS(fileNames)

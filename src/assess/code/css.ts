@@ -22,16 +22,16 @@ export function getPropertiesFromCSS(css: string): PropertyValueOccurrence {
 
   const cssObj = parse(css)
   if (!cssObj || !cssObj.stylesheet) return {}
-  const rules = cssObj.stylesheet.rules
+  const { rules } = cssObj.stylesheet
   if (!rules) return {}
 
   for (const rule of rules) {
-    const declarations = (rule as Rule).declarations
+    const { declarations } = rule as Rule
     if (!declarations) continue
     for (const declaration of declarations) {
-      const property = (declaration as Declaration).property
+      const { property } = declaration as Declaration
       if (!property) continue
-      const value = (declaration as Declaration).value
+      const { value } = declaration as Declaration
       if (!value) continue
       if (!properties[property]) properties[property] = {}
       if (!properties[property][value]) properties[property][value] = []

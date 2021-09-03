@@ -1,9 +1,8 @@
-
 import assess from '../assess'
 import { BrowsabilityConfiguration } from '../config/Configuration'
 import { BrowsabilityMessage } from '../common/BrowsabilityMessage'
 
-function init(args: string[]): void { return }
+function init(args: string[]): void { }
 
 export function parseCommand(args: string[]): BrowsabilityConfiguration[] {
   return []
@@ -23,7 +22,7 @@ export default async function cli(args: string[]): Promise<void> {
       await init(args.slice(1))
       break
     default:
-      await assess(parseCommand(args), "")
+      await assess(parseCommand(args), '')
       break
   }
 }

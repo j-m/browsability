@@ -11,24 +11,24 @@ export type PropertyValueOccurrence = { [key in string]: { [key in string]: Posi
 
 function maximum(supportA: Support, supportB: Support): Support {
   return Object.entries(supportA).reduce((accumulator, [browser, version]) => ({
-    ...accumulator, [browser]: (supportB[browser as BrowserNames] > version) ? supportB[browser as BrowserNames] : version
+    ...accumulator, [browser]: (supportB[browser as BrowserNames] > version) ? supportB[browser as BrowserNames] : version,
   }), {} as Support)
 }
 
 const ZERO_SUPPORT: Support = {
-  'chrome': 0,
-  'chrome_android': 0,
-  'edge': 0,
-  'firefox': 0,
-  'firefox_android': 0,
-  'ie': 0,
-  'nodejs': 0,
-  'opera': 0,
-  'opera_android': 0,
-  'safari': 0,
-  'safari_ios': 0,
-  'samsunginternet_android': 0,
-  'webview_android': 0
+  chrome: 0,
+  chrome_android: 0,
+  edge: 0,
+  firefox: 0,
+  firefox_android: 0,
+  ie: 0,
+  nodejs: 0,
+  opera: 0,
+  opera_android: 0,
+  safari: 0,
+  safari_ios: 0,
+  samsunginternet_android: 0,
+  webview_android: 0,
 }
 
 export function calculateMinimumSupport(properties: PropertyValueOccurrence): Support {

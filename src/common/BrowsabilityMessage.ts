@@ -21,11 +21,11 @@ browsability <command>
   -c or --config  <directory>     Configuration file location. 
 
 Run 'browsability -e' for examples
-`
+`,
   )
 
   static readonly VERSION = new BrowsabilityMessage(
     'VERSION',
-    process.env.npm_package_version || 'unknown'
+    process.env.npm_package_version || 'unknown',
   )
 }

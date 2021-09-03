@@ -4,7 +4,7 @@ import { promises as fs } from 'fs'
 import { BrowsabilityError } from '../common/BrowsabilityError'
 import { BrowsabilityConfiguration } from './Configuration'
 
-export const CONFIG_FILE_NAME = `.browsability.js`
+export const CONFIG_FILE_NAME = '.browsability.js'
 
 async function exists(filepath: string): Promise<boolean> {
   try {
