@@ -1,6 +1,6 @@
 import * as bcd from '@mdn/browser-compat-data/data.json'
 import {
-  BrowserNames, CompatDataIdentifiers, Identifier, SimpleSupportStatement,
+  BrowserNames, Identifier, PrimaryIdentifier, SimpleSupportStatement,
 } from '@mdn/browser-compat-data/types'
 
 export type Support = { [key in BrowserNames]: number }
@@ -45,5 +45,5 @@ function mapProperties(properties: Record<string, unknown>) {
       },
     }), {} as { [key in string]: Property })
 }
-
-export const data = mapProperties((bcd as CompatDataIdentifiers).css.properties)
+const { css } = bcd as Record<string, unknown>
+export const data = mapProperties((css as PrimaryIdentifier).properties)
