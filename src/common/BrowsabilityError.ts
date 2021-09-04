@@ -1,10 +1,10 @@
-export class BrowsabilityError {
+export default class BrowsabilityError {
   private constructor(
     public id: string,
     public message: string,
     public suggestion: string,
     public error?: string[],
-  ) {}
+  ) { }
 
   static readonly MULTIPLE_COMMANDS = new BrowsabilityError(
     'MULTIPLE_COMMANDS',

@@ -7,11 +7,14 @@ export interface Position {
   column: number;
 }
 
-export type PropertyValueOccurrence = { [key in string]: { [key in string]: Position[] } }
+export type PropertyValueOccurrence = { [property in string]: { [value in string]: Position[] } }
 
 function maximum(supportA: Support, supportB: Support): Support {
   return Object.entries(supportA).reduce((accumulator, [browser, version]) => ({
-    ...accumulator, [browser]: (supportB[browser as BrowserNames] > version) ? supportB[browser as BrowserNames] : version,
+    ...accumulator,
+    [browser]: (supportB[browser as BrowserNames] > version)
+      ? supportB[browser as BrowserNames]
+      : version,
   }), {} as Support)
 }
 

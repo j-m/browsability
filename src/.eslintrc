@@ -18,6 +18,9 @@
   },
   "rules": {
     "semi": ["error", "never"],
-    "@typescript-eslint/semi": ["error", "never"]
+    "@typescript-eslint/semi": ["error", "never"],
+    "max-len": "off",
+    "consistent-return": "off",
+    "@typescript-eslint/no-throw-literal": "off"
   }
 }

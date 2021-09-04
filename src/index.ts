@@ -11,6 +11,7 @@ if (require.main === module) {
     const [, , ...args] = process.argv
     cli(args)
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error)
     process.exitCode = 1
   }

@@ -1,5 +1,7 @@
 import * as bcd from '@mdn/browser-compat-data/data.json'
-import { BrowserNames, SimpleSupportStatement } from '@mdn/browser-compat-data/types'
+import {
+  BrowserNames, CompatDataIdentifiers, Identifier, SimpleSupportStatement,
+} from '@mdn/browser-compat-data/types'
 
 export type Support = { [key in BrowserNames]: number }
 export type PropertyValues = { [key in string]: Support | undefined }
@@ -9,18 +11,22 @@ function mapSupportStatement(support: SimpleSupportStatement): number | undefine
   if (typeof support.version_added === 'string') {
     return Number(support.version_added.replace('≤', ''))
   }
+  return undefined
 }
 
-function mapSupport(support: any): Support | undefined {
+function mapSupport(support: Record<string, unknown> | undefined): Support | undefined {
   if (!support) return undefined
   return Object.entries(support)
-    .reduce((accumulator, [browser, support]) => ({ ...accumulator, [browser]: mapSupportStatement(support as SimpleSupportStatement) }),
-      {} as Support)
+    .reduce((accumulator, [browser, browserSupport]) => ({
+      ...accumulator,
+      [browser]: mapSupportStatement(browserSupport as SimpleSupportStatement),
+    }), {} as Support)
 }
 
-function mapProperty(propertyData: any): PropertyValues {
-  return Object.entries(propertyData as any).reduce((accumulator, [value, valueData]) => {
-    const support = (valueData as any)?.__compat?.support
+function mapProperty(propertyData: Record<string, unknown>): PropertyValues {
+  return Object.entries(propertyData).reduce((accumulator, [value, valueData]) => {
+    // eslint-disable-next-line no-underscore-dangle
+    const support = (valueData as Identifier)?.__compat?.support
     if (!support) return accumulator
     return {
       ...accumulator, [value]: mapSupport(support),
@@ -28,13 +34,16 @@ function mapProperty(propertyData: any): PropertyValues {
   }, {} as PropertyValues)
 }
 
-function mapProperties(properties: any) {
+function mapProperties(properties: Record<string, unknown>) {
   return Object.entries(properties)
     .reduce((accumulator, [property, propertyData]) => ({
       ...accumulator,
-      [property]: { support: mapSupport((propertyData as any)?.__compat?.support), values: mapProperty(propertyData) },
-    }),
-    {} as { [key in string]: Property })
+      [property]: {
+        // eslint-disable-next-line no-underscore-dangle
+        support: mapSupport((propertyData as Identifier)?.__compat?.support),
+        values: mapProperty(propertyData as Identifier),
+      },
+    }), {} as { [key in string]: Property })
 }
 
-export const data = mapProperties((bcd as any).css.properties)
+export const data = mapProperties((bcd as CompatDataIdentifiers).css.properties)

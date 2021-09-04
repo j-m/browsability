@@ -1,5 +1,5 @@
-export class BrowsabilityMessage {
-  private constructor(public id: string, public message: string) {}
+export default class BrowsabilityMessage {
+  private constructor(public id: string, public message: string) { }
 
   static readonly HELP = new BrowsabilityMessage(
     'HELP',

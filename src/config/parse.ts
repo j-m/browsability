@@ -1,8 +1,8 @@
 import glob from 'fast-glob'
 import path from 'path'
 import { promises as fs } from 'fs'
-import { BrowsabilityError } from '../common/BrowsabilityError'
 import { BrowsabilityConfiguration } from './Configuration'
+import BrowsabilityError from '../common/BrowsabilityError'
 
 export const CONFIG_FILE_NAME = '.browsability.js'
 
@@ -11,7 +11,7 @@ async function exists(filepath: string): Promise<boolean> {
     await fs.access(filepath)
     return true
   } catch (error) {
-    if (error.code != 'ENOENT') {
+    if (error.code !== 'ENOENT') {
       throw error
     }
     return false
@@ -19,23 +19,19 @@ async function exists(filepath: string): Promise<boolean> {
 }
 
 async function parseLocation(filepath?: string): Promise<string> {
+  const locations = [
+    `./${CONFIG_FILE_NAME}`,
+    `./config/${CONFIG_FILE_NAME}`,
+  ]
   if (filepath) {
-    const locations = [filepath, path.join(filepath, `/${CONFIG_FILE_NAME}`)]
-    for (const location in locations) {
-      if (exists(location)) {
-        return location
-      }
-    }
-    throw BrowsabilityError.MISSING_FILE(...locations)
-  } else {
-    const locations = [`./${CONFIG_FILE_NAME}`, `./config/${CONFIG_FILE_NAME}`]
-    for (const location in locations) {
-      if (exists(location)) {
-        return location
-      }
-    }
-    throw BrowsabilityError.MISSING_FILE(...locations)
+    locations.unshift(filepath, path.join(filepath, `/${CONFIG_FILE_NAME}`))
   }
+  locations.forEach(async (location) => {
+    if (await exists(location)) {
+      return location
+    }
+  })
+  throw BrowsabilityError.MISSING_FILE(...locations)
 }
 
 async function loadFile(location: string): Promise<string> {
@@ -57,7 +53,7 @@ async function parseFile(content: string): Promise<BrowsabilityConfiguration[]> 
 }
 
 async function expandGlobs(config: BrowsabilityConfiguration[]): Promise<BrowsabilityConfiguration[]> {
-  // TODO await glob('./**/*.js', { ignore: config.exclude })
+  await glob('./**/*.js', { ignore: config[0].exclude })// TODO
   return config
 }
 
