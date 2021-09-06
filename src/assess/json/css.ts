@@ -7,9 +7,12 @@ export interface Position {
   column: number;
 }
 
-export type PropertyValueOccurrence = { [property in string]: { [value in string]: Position[] } }
+export type Occurrence = { positions: Position[], support?: Support }
+export type PropertyValueData = { [value in string]: Occurrence }
+export type PropertyData = { [property in string]: { values: PropertyValueData, support?: Support } }
 
-function maximum(supportA: Support, supportB: Support): Support {
+function maximum(supportA: Support, supportB?: Support): Support {
+  if (!supportB) return supportA
   return Object.entries(supportA).reduce((accumulator, [browser, version]) => ({
     ...accumulator,
     [browser]: (supportB[browser as BrowserNames] > version)
@@ -18,7 +21,7 @@ function maximum(supportA: Support, supportB: Support): Support {
   }), {} as Support)
 }
 
-const ZERO_SUPPORT: Support = {
+export const ZERO_SUPPORT: Support = {
   chrome: 0,
   chrome_android: 0,
   edge: 0,
@@ -34,18 +37,26 @@ const ZERO_SUPPORT: Support = {
   webview_android: 0,
 }
 
-export function calculateMinimumSupport(properties: PropertyValueOccurrence): Support {
+export function calculateMinimumSupport(properties: PropertyData): Support {
   let minimumSupport: Support = { ...ZERO_SUPPORT }
-  Object.entries(properties).forEach(([property, values]) => {
-    if (!data[property]) return
-    const propertySupport = data[property].support
-    if (!propertySupport) return
-    minimumSupport = maximum(minimumSupport, propertySupport)
-    Object.keys(values).forEach((value) => {
-      const support = data[property].values[value]
-      if (!support) return
-      minimumSupport = maximum(minimumSupport, support)
+  Object.keys(properties).forEach((property) => {
+    minimumSupport = maximum(minimumSupport, properties[property].support)
+    Object.keys(properties[property].values).forEach((value) => {
+      minimumSupport = maximum(minimumSupport, properties[property].values[value].support)
     })
   })
   return minimumSupport
+}
+
+export function addSupportDataToPropertyValueOccurrence(properties: PropertyData): PropertyData {
+  const propertiesWithSupport = { ...properties }
+  Object.keys(properties).forEach((property) => {
+    if (!data[property]) return
+    propertiesWithSupport[property].support = data[property].support
+    Object.keys(propertiesWithSupport[property].values).forEach((value) => {
+      propertiesWithSupport[property].values[value].support = data[property].values[value]
+    })
+  })
+
+  return propertiesWithSupport
 }
