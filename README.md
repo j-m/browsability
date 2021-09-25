@@ -3,8 +3,6 @@
     <img src="docs/design/logo-banner.svg" alt="logo" height="80"/>
   </a>
   
-  <h3 align="center"></h3>
-  
   <p align="center">
     <img alt="not ready for production" src="https://img.shields.io/badge/Production-Not%20Ready-red?style=flat-square"/>
     <a href="https://npmjs.org/package/browsability"><img alt="version" src="https://img.shields.io/npm/v/browsability.svg?style=flat-square"/></a>
@@ -17,9 +15,16 @@
 
 ## About
 
-Scans your project for HTML, CSS, and JavaScript and figures out the minimum browser version your project supports.  
-Browsability is designed to be run as a CLI tool.  
-Browsability uses [MDN's compatibility data](https://github.com/mdn/browser-compat-data), so will only work for [these browsers](https://github.com/mdn/browser-compat-data/tree/master/browsers).
+Scan your HTML, CSS, and JavaScript to find out the minimum browser version that you support.  
+No guessing. No arduous tests. Just data.  
+
+Browsability is designed to be run as a CLI tool, no webdrivers or complex emulation. For now, we use just [MDN's compatibility data](https://github.com/mdn/browser-compat-data), so you can only assess [these browsers](https://github.com/mdn/browser-compat-data/tree/master/browsers).
+
+## Quick links
+
+[Roadmap](https://github.com/j-m/browsability/projects/1)  
+[Changelog](./docs/changelog.md)  
+[Docs](./docs)  
 
 ## Getting Started
 
@@ -76,15 +81,6 @@ Example `.browsability.js` file:
   ]
 }]
 ```
-
-## Roadmap
-
-- [ ] MVP: Scan a project and find HTML/CSS/JavaScript  
-- [ ] Write docs and self-assess
-- [ ] Implement "scope". (Assess only version control changes)  
-- [ ] Cross-reference/include data from sources other than MDN  
-
-See [the changelog](./docs/changelog.md) for version history.  
 
 ## Contributors
 
