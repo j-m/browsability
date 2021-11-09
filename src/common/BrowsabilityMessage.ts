@@ -1,5 +1,5 @@
-export class BrowsabilityMessage {
-  private constructor(public id: string, public message: string) {}
+export default class BrowsabilityMessage {
+  private constructor(public id: string, public message: string) { }
 
   static readonly HELP = new BrowsabilityMessage(
     'HELP',
@@ -21,11 +21,11 @@ browsability <command>
   -c or --config  <directory>     Configuration file location. 
 
 Run 'browsability -e' for examples
-`
+`,
   )
 
   static readonly VERSION = new BrowsabilityMessage(
     'VERSION',
-    process.env.npm_package_version || 'unknown'
+    process.env.npm_package_version || 'unknown',
   )
 }

@@ -1,23 +1,13 @@
 .vs/
 .vscode/
-*.sln
-*.njsproj
-
-*-debug.log
-**/debug.log
-*-error.log
-/.nyc_output
-/tmp
-*.tgz
-/yarn.lock
-config/tsconfig.tsbuildinfo
-.rollup.cache
 
 node_modules/
-.env
+
+config/tsconfig.tsbuildinfo
 
 /build
 /lib
 /typings
 
-coverage/
+*.log
+*.txt

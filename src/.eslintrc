@@ -1,16 +1,26 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "prettier"],
+  "parserOptions": {
+    "project": "src/tsconfig.eslint.json"
+  },
+  "plugins": ["@typescript-eslint"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "airbnb-base",
+    "airbnb-typescript/base"
   ],
   "env": {
     "es6": true,
     "node": true
   },
-  "rules": {}
+  "rules": {
+    "semi": ["error", "never"],
+    "@typescript-eslint/semi": ["error", "never"],
+    "max-len": "off",
+    "consistent-return": "off",
+    "@typescript-eslint/no-throw-literal": "off"
+  }
 }
