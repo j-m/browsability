@@ -72,4 +72,3 @@ function mapValues(data: Identifier): Values {
 const { css } = bcd as CompatData
 export const data = mapProperties(css.properties)
 export const values = mapValues(css.types)
-console.dir(values, { depth: null })
