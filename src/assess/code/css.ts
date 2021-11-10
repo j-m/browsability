@@ -62,8 +62,10 @@ export function getPropertiesFromRule(rule: Rule | AtRule | Comment): PropertyDa
     case 'media':
       // TODO Do something with `(rule as Media).media`
       return ((rule as Media).rules || [])
-        .reduce((accumulator, value) => combinePropertyValueOccurrence(accumulator, getPropertiesFromRule(value)),
-          {} as PropertyData)
+        .reduce(
+          (accumulator, value) => combinePropertyValueOccurrence(accumulator, getPropertiesFromRule(value)),
+          {} as PropertyData,
+        )
     case 'comment':
     default:
       return {}
