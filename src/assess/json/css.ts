@@ -22,17 +22,18 @@ function maximum(supportA: Support, supportB?: Support): Support {
 }
 
 export const ZERO_SUPPORT: Support = {
-  chrome: 0,
   chrome_android: 0,
+  chrome: 0,
+  deno: 0,
   edge: 0,
-  firefox: 0,
   firefox_android: 0,
+  firefox: 0,
   ie: 0,
   nodejs: 0,
-  opera: 0,
   opera_android: 0,
-  safari: 0,
+  opera: 0,
   safari_ios: 0,
+  safari: 0,
   samsunginternet_android: 0,
   webview_android: 0,
 }
