@@ -11,7 +11,7 @@ async function exists(filepath: string): Promise<boolean> {
     await fs.access(filepath)
     return true
   } catch (error) {
-    if (error.code !== 'ENOENT') {
+    if ((error as { code?: string }).code !== 'ENOENT') {
       throw error
     }
     return false
@@ -34,21 +34,25 @@ async function parseLocation(filepath?: string): Promise<string> {
   throw BrowsabilityError.MISSING_FILE(...locations)
 }
 
-async function loadFile(location: string): Promise<string> {
+async function loadFile(location: string): Promise<string | undefined> {
   try {
     const content: string = await fs.readFile(location, 'utf8')
     return content
   } catch (error) {
-    throw BrowsabilityError.READ_FAILED(location, error)
+    if (error instanceof Error) {
+      throw BrowsabilityError.READ_FAILED(location, error.message)
+    }
   }
 }
 
-async function parseFile(content: string): Promise<BrowsabilityConfiguration[]> {
+async function parseFile(content: string): Promise<BrowsabilityConfiguration[] | undefined> {
   try {
     const config: BrowsabilityConfiguration[] = JSON.parse(content)
     return config
   } catch (error) {
-    throw BrowsabilityError.PARSE_FAILED(error)
+    if (error instanceof Error) {
+      throw BrowsabilityError.PARSE_FAILED(error.message)
+    }
   }
 }
 
@@ -59,8 +63,8 @@ async function expandGlobs(config: BrowsabilityConfiguration[]): Promise<Browsab
 
 export async function load(file: string): Promise<BrowsabilityConfiguration[]> {
   const location: string = await parseLocation(file)
-  const content: string = await loadFile(location)
-  const configWithGlobbedFilePaths: BrowsabilityConfiguration[] = await parseFile(content)
-  const configWithExpandedFilePaths: BrowsabilityConfiguration[] = await expandGlobs(configWithGlobbedFilePaths)
+  const content: string | undefined = await loadFile(location)
+  const configWithGlobbedFilePaths: BrowsabilityConfiguration[] | undefined = await parseFile(content || '')
+  const configWithExpandedFilePaths: BrowsabilityConfiguration[] = await expandGlobs(configWithGlobbedFilePaths || [])
   return configWithExpandedFilePaths
 }
