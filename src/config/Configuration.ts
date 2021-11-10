@@ -1,4 +1,6 @@
-export type Browser = 'chrome' | 'firefox' | 'safari' | 'edge' | 'ie'
+import { BrowserNames } from '@mdn/browser-compat-data/types'
+
+export type Browser = BrowserNames
 
 export type Version = 'current' | number
 
