@@ -73,7 +73,7 @@
     "eslint-config-airbnb-base-typescript": "^1",
     "eslint-config-airbnb-typescript": "^16",
     "eslint-plugin-import": "^2",
-    "husky": "^7",
+    "husky": "^8",
     "jest": "^27",
     "rimraf": "^3",
     "ts-jest": "^27",
