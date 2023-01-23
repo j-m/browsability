@@ -54,7 +54,7 @@
     }
   },
   "dependencies": {
-    "@mdn/browser-compat-data": "^4",
+    "@mdn/browser-compat-data": "^5",
     "css": "^3",
     "fast-glob": "^3",
     "htmlparser2": "^7"
