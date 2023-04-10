@@ -75,7 +75,7 @@
     "eslint-plugin-import": "^2",
     "husky": "^7",
     "jest": "^27",
-    "rimraf": "^3",
+    "rimraf": "^5",
     "ts-jest": "^27",
     "ts-node": "^10",
     "tslib": "^2",
